@@ -10,12 +10,7 @@ export const categories = [
       'https://i.pinimg.com/236x/25/14/29/251429345940a47490cc3d47dfe0a8eb.jpg',
   },
   {
-    name: "Fond d'écran",
-    image:
-      'https://i.pinimg.com/236x/03/48/b6/0348b65919fcbe1e4f559dc4feb0ee13.jpg',
-  },
-  {
-    name: 'Site internet',
+    name: 'Internet',
     image:
       'https://i.pinimg.com/750x/66/b1/29/66b1296d36598122e6a4c5452b5a7149.jpg',
   },
@@ -119,3 +114,66 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
         },
       },
     } `;
+
+export const pinDetailQuery = (pinId) => {
+  const query = `*[_type == "pin" && _id == '${pinId}']{
+        image{
+          asset->{
+            url
+          }
+        },
+        _id,
+        title, 
+        about,
+        category,
+        destination,
+        postedBy->{
+          _id,
+          userName,
+          image
+        },
+       save[]{
+          postedBy->{
+            _id,
+            userName,
+            image
+          },
+        },
+        comments[]{
+          comment,
+          _key,
+          postedBy->{
+            _id,
+            userName,
+            image
+          },
+        }
+      }`;
+  return query;
+};
+
+export const pinDetailMorePinQuery = (pin) => {
+  const query = `*[_type == "pin" && category == '${pin.category}' && _id != '${pin._id}' ]{
+        image{
+          asset->{
+            url
+          }
+        },
+        _id,
+        destination,
+        postedBy->{
+          _id,
+          userName,
+          image
+        },
+        save[]{
+          _key,
+          postedBy->{
+            _id,
+            userName,
+            image
+          },
+        },
+      }`;
+  return query;
+};
