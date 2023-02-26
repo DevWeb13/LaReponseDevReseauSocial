@@ -28,10 +28,15 @@ const Feed = () => {
     }
   }, [categoryId]);
 
-  if (loading)
+  if (loading) {
     return (
       <Spinner message='Nous ajoutons de nouvelles idées à votre flux !' />
     );
+  }
+
+  if (!pins?.length) {
+    return <h2>Il n'y a pas d'épingles disponibles</h2>;
+  }
 
   return <div>{pins && <MasonryLayout pins={pins} />}</div>;
 };
