@@ -1,13 +1,13 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
-import shareVideo from '../assets/share.mp4';
-import logo from '../assets/logowhite.png';
+import logo from '../assets/logo.png';
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
 
 import { client } from '../client';
+
+const randomImage =
+  'https://source.unsplash.com/1600x900/?nature,photography,technology';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,17 +32,13 @@ const Login = () => {
   return (
     <div className='flex flex-col items-center justify-start h-screen'>
       <div className='relative w-full h-full'>
-        <video
-          src={shareVideo}
-          typeof='video/mp4'
-          loop
-          controls={false}
-          muted
-          autoPlay
-          className='object-cover w-full h-full'
+        <img
+          src={randomImage}
+          alt='random-pic'
+          className='w-full h-full'
         />
-        <div className=' absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay'>
-          <div className='p-5'>
+        <div className=' absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay '>
+          <div className='p-5 m-5  bg-black/50 rounded-full'>
             <img
               src={logo}
               alt='logo'

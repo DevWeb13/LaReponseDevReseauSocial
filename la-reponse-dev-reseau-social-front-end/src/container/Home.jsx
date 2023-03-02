@@ -13,10 +13,7 @@ import { fetchUser } from '../utils/fetchUser';
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
-  const [user, setUser] = useState({
-    _id: '',
-    image: '',
-  });
+  const [user, setUser] = useState(null);
   const scrollRef = useRef(null);
 
   const userInfo = fetchUser();
@@ -26,7 +23,7 @@ const Home = () => {
     client.fetch(query).then((res) => {
       setUser(res[0]);
     });
-  }, []);
+  }, [userInfo?.sub]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);

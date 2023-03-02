@@ -28,13 +28,25 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         .insert('after', 'save[-1]', [
           {
             _key: uuidv4(),
-            userId: user.sub,
+            userId: user?.sub,
             postedBy: {
               _type: 'postedBy',
-              _ref: user.sub,
+              _ref: user?.sub,
             },
           },
         ])
+        .commit()
+        .then(() => {
+          window.location.reload();
+        });
+    }
+  };
+
+  const unSavePin = (id) => {
+    if (alreadySaved) {
+      client
+        .patch(id)
+        .unset(['save'])
         .commit()
         .then(() => {
           window.location.reload();
@@ -77,7 +89,11 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
               {alreadySaved ? (
                 <button
                   type='button'
-                  className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outlined-none'>
+                  className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outlined-none'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    unSavePin(_id);
+                  }}>
                   {save?.length} Enregistré
                 </button>
               ) : (

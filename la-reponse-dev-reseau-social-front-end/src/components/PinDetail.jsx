@@ -8,7 +8,14 @@ import MasonryLayout from './MasonryLayout';
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
 import Spinner from './Spinner';
 
-const PinDetail = ({ user }) => {
+/**
+ *
+ * @param {object} props
+ * @param {object} props.user - user object
+ * @param {string} props.user._id - user id
+ * @returns {JSX.Element}
+ */
+const PinDetail = ({ user: { _id } }) => {
   const [pins, setPins] = useState(null);
   const [pinDetail, setPinDetail] = useState(null);
   const [comment, setComment] = useState('');
@@ -22,7 +29,6 @@ const PinDetail = ({ user }) => {
     if (query) {
       client.fetch(`${query}`).then((data) => {
         setPinDetail(data[0]);
-        console.log(data);
         if (data[0]) {
           const query1 = pinDetailMorePinQuery(data[0]);
           client.fetch(query1).then((res) => {
@@ -34,7 +40,7 @@ const PinDetail = ({ user }) => {
   };
 
   const addComment = () => {
-    if (comment) {
+    if (comment && pinId) {
       setAddingComment(true);
       client
         .patch(pinId)
@@ -44,7 +50,7 @@ const PinDetail = ({ user }) => {
             _key: uuidv4(),
             postedBy: {
               _type: 'postedBy',
-              _ref: user._id,
+              _ref: _id,
             },
             comment,
           },
@@ -63,8 +69,6 @@ const PinDetail = ({ user }) => {
   }, [pinId]);
 
   if (!pinDetail) return <Spinner message='Chargement' />;
-
-  console.log(pinDetail);
 
   return (
     <>

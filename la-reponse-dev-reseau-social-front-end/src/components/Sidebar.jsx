@@ -72,6 +72,7 @@ const Sidebar = ({ user, closeToggle }) => {
             className='w-10 h-10 rounded-full'
           />
           <p>{user.userName}</p>
+          <IoIosArrowForward />
         </Link>
       )}
     </div>
