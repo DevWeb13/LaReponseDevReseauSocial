@@ -28,7 +28,12 @@ const CreatePin = ({ user }) => {
 
   const navigate = useNavigate();
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
   const uploadImage = (e) => {
+    e.preventDefault();
     const { type, name } = e.target.files[0];
     if (
       type === 'image/png' ||
@@ -43,6 +48,39 @@ const CreatePin = ({ user }) => {
 
       client.assets
         .upload('image', e.target.files[0], {
+          contentType: type,
+          filename: name,
+        })
+        .then((document) => {
+          console.log('Image téléchargée avec succès', document);
+          setImageAsset(document);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log("Erreur de téléchargement d'image", err);
+          setLoading(false);
+        });
+    } else {
+      setWrongImageType(true);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const { type, name } = e.dataTransfer.files[0];
+    if (
+      type === 'image/png' ||
+      type === 'image/jpeg' ||
+      type === 'image/jpg' ||
+      type === 'image/gif' ||
+      type === 'image/svg' ||
+      type === 'image/tiff'
+    ) {
+      setWrongImageType(false);
+      setLoading(true);
+
+      client.assets
+        .upload('image', e.dataTransfer.files[0], {
           contentType: type,
           filename: name,
         })
@@ -106,13 +144,18 @@ const CreatePin = ({ user }) => {
             {loading && <Spinner message={null} />}
             {wrongImageType && <p>Mauvais type d'image</p>}
             {!imageAsset ? (
-              <label className='h-full'>
+              <label
+                className='h-full   '
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}>
                 <div className='flex flex-col items-center justify-center h-full'>
                   <div className='flex flex-col justify-center items-center'>
                     <p className='font-bold text-2xl'>
                       <AiOutlineCloudUpload />
                     </p>
-                    <p className='text-lg'>Cliquez pour télécharger</p>
+                    <p className='text-lg'>
+                      Cliquez ou glissez-déposez votre image ici
+                    </p>
                   </div>
                   <p className='mt-32 text-gray-400 text-center'>
                     Utilisez des fichiers JPG, SVG, PNG, GIF de haute qualité de
@@ -122,8 +165,8 @@ const CreatePin = ({ user }) => {
                 <input
                   type='file'
                   name='upload-image'
+                  className=' absolute top-0 left-0 opacity-0'
                   onChange={uploadImage}
-                  className='w-0 h-0'
                 />
               </label>
             ) : (
