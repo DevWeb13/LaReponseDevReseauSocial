@@ -7,6 +7,7 @@ import { client, urlFor } from '../client';
 import MasonryLayout from './MasonryLayout';
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
 import Spinner from './Spinner';
+import uuid from 'uuid';
 
 /**
  *
@@ -122,7 +123,7 @@ const PinDetail = ({ user: { _id } }) => {
           <div className='max-h-370 overflow-y-auto'>
             {pinDetail?.comments?.map((comment, i) => (
               <div
-                key={i}
+                key={uuidv4()}
                 className='flex gap-2 mt-5 items-center bg-white rounded-lg'>
                 <img
                   className='w-10 h-10 rounded-full cursor-pointer'
