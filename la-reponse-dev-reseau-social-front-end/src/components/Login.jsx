@@ -12,19 +12,21 @@ const randomImage =
 const Login = () => {
   const navigate = useNavigate();
   const createOrGetUser = async (credentialResponse) => {
-    /** @type {{ name: string , picture: string, sub: string}} */
+    /** @type {{ name: string , picture: string, sub: string, email: string}} */
     const decoded = jwt_decode(credentialResponse.credential);
 
     localStorage.setItem('user', JSON.stringify(decoded));
-    const { name, picture, sub } = decoded;
+    const { name, picture, sub, email } = decoded;
+    console.log(email);
     const doc = {
       _id: sub,
       _type: 'user',
       userName: name,
       image: picture,
+      email: email,
     };
 
-    client.createIfNotExists(doc).then((res) => {
+    client.createOrReplace(doc).then((res) => {
       navigate('/', { replace: true });
     });
   };
