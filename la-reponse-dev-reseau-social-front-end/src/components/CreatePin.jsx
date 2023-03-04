@@ -99,7 +99,7 @@ const CreatePin = ({ user }) => {
   };
 
   const savePin = () => {
-    if (title && about && destination && category && imageAsset?._id) {
+    if (title && about && category && imageAsset?._id) {
       const doc = {
         _type: 'pin',
         title,
