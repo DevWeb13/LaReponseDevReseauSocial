@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import { Navbar, Feed, PinDetail, CreatePin, Search } from '../components';
 
 const Pins = ({ user }) => {
-  console.log(document.cookie);
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
