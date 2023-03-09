@@ -42,11 +42,12 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     }
   };
 
+  // Delete the save from the user's profile
   const unSavePin = (id) => {
     if (alreadySaved) {
       client
         .patch(id)
-        .unset(['save'])
+        .unset([`save[${save?.indexOf(user?.sub)}]`])
         .commit()
         .then(() => {
           window.location.reload();
