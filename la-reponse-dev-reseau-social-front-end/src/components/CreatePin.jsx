@@ -41,7 +41,8 @@ const CreatePin = ({ user }) => {
       type === 'image/jpg' ||
       type === 'image/gif' ||
       type === 'image/svg' ||
-      type === 'image/tiff'
+      type === 'image/tiff' ||
+      type === 'image/webp'
     ) {
       setWrongImageType(false);
       setLoading(true);
