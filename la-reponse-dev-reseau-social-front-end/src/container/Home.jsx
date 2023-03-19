@@ -13,7 +13,11 @@ import { fetchUser } from '../utils/fetchUser';
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    _id: '',
+    image: '',
+  });
+  /** @type {{current: object}} */
   const scrollRef = useRef(null);
 
   const userInfo = fetchUser();

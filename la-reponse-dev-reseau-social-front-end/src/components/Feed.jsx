@@ -38,16 +38,7 @@ const Feed = () => {
     return <h2>Il n'y a pas d'épingles disponibles</h2>;
   }
 
-  return (
-    <div>
-      {pins && (
-        <MasonryLayout
-          pins={pins}
-          setLoading={setLoading}
-        />
-      )}
-    </div>
-  );
+  return <div>{pins && <MasonryLayout pins={pins} />}</div>;
 };
 
 export default Feed;
