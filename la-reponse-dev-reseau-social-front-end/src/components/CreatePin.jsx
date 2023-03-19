@@ -159,8 +159,8 @@ const CreatePin = ({ user }) => {
                     </p>
                   </div>
                   <p className='mt-32 text-gray-400 text-center'>
-                    Utilisez des fichiers JPG, SVG, PNG, GIF de haute qualité de
-                    moins de 20 Mo
+                    Utilisez des fichiers JPG, SVG, PNG, WEBP, GIF de haute
+                    qualité de moins de 20 Mo
                   </p>
                 </div>
                 <input
