@@ -8,10 +8,10 @@ import logo from '../assets/logo.png';
 import { categories } from '../utils/data';
 
 const isNotActiveStyle =
-  'flex px-5 gap-3 items-center text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize';
+  'flex px-5 gap-3 items-center hover:text-[#145DA0] hover:font-bold transition-all duration-200 ease-in-out capitalize';
 
 const isActiveStyle =
-  'flex px-5 gap-3 items-center font-extrabold border-r-2 border-black  transition-all duration-200 ease-in-out capitalize';
+  'flex px-5 gap-3 items-center font-extrabold border-r-2 border-[#145DA0]  transition-all duration-200 ease-in-out capitalize text-[#145DA0]';
 
 const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
@@ -40,7 +40,9 @@ const Sidebar = ({ user, closeToggle }) => {
             <RiHomeFill />
             Accueil
           </NavLink>
-          <h3 className='mt-2 px-5 text-base 2xl:text-xl'>Catégories</h3>
+          <h3 className='mt-2 px-5 text-base 2xl:text-xl text-[#145DA0] font-semibold'>
+            Catégories
+          </h3>
           {categories.slice(0, categories.length - 1).map((category) => (
             <NavLink
               to={`/category/${category.name}`}
@@ -62,7 +64,7 @@ const Sidebar = ({ user, closeToggle }) => {
       {user && (
         <Link
           to={`user-profile/${user._id}`}
-          className=' flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3'
+          className=' flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3 hover:text-[#145DA0] font-semibold'
           onClick={handleCloseSidebar}>
           <img
             src={user.image}

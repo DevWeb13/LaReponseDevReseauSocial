@@ -17,6 +17,21 @@ export default {
       name: 'destination',
       title: 'Destination',
       type: 'url',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          // Si la valeur est vide, alors la validation passe
+          if (!value) {
+            return true
+          }
+
+          // Vérifier que la valeur est une URL valide
+          try {
+            new URL(value)
+            return true
+          } catch (err) {
+            return 'Veuillez entrer une URL valide pour la destination'
+          }
+        }),
     },
     {
       name: 'category',

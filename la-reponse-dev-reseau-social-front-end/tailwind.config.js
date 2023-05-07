@@ -40,9 +40,9 @@ module.exports = {
         620: '620px',
       },
       textColor: {
-        lightGray: '#F1EFEE',
-        primary: '#FAFAFA',
-        secColor: '#efefef',
+        lightGray: '#959595',
+        primary: '#145da0',
+        secColor: '#1e84e3',
         navColor: '#BEBEBE',
       },
       backgroundColor: {

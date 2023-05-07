@@ -62,12 +62,12 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   };
 
   return (
-    <div className='m-2 border-4 rounded-lg'>
+    <div className='m-2  rounded-lg '>
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
         onClick={() => navigate(`/pin-detail/${_id}`)}
-        className='relative cursor-zoom-in w-auto hover:shadow-lg  overflow-hidden transition-all duration-500 ease-in-out border-4'>
+        className='relative cursor-zoom-in w-auto hover:shadow-lg  overflow-hidden transition-all duration-500 ease-in-out border-2 rounded-t-md border-[#145DA0]'>
         <img
           src={urlFor(image).width(250).url()}
           alt='user-post'
@@ -75,7 +75,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         />
         {postHovered && (
           <div
-            className='absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50'
+            className='absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50 '
             style={{ height: '100%' }}>
             <div className='flex items-center justify-between'>
               <div className='flex gap-2'>
@@ -109,16 +109,16 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 </button>
               )}
             </div>
-            <div className='flex justify-between items-center gap-2 w-full'>
+            <div className='flex justify-between items-center gap-2 w-full truncate'>
               {destination && (
                 <a
                   href={destination}
                   target='_blank'
                   rel='noreferrer'
-                  className='bg-white  flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md '>
+                  className='bg-white  flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md   '>
                   <BsFillArrowUpRightCircleFill />
-                  {destination.length > 15
-                    ? `${destination.slice(0, 15)}...`
+                  {destination.length > 10
+                    ? `${destination.slice(0, 10)}...`
                     : destination}
                 </a>
               )}
@@ -139,13 +139,15 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
       </div>
       <Link
         to={`user-profile/${postedBy?._id}`}
-        className='flex gap-2 items-center border-4 p-1'>
+        className='flex gap-2 items-center border-2 border-t-0 p-1 rounded-b-md bg-white border-[#145DA0]'>
         <img
           className='w-8 h-8 rounded-full object-cover'
           src={postedBy?.image}
           alt='user-profile'
         />
-        <p className='capitalize font-semibold '>{postedBy?.userName}</p>
+        <p className='capitalize  hover:text-[#145DA0] hover:font-semibold'>
+          {postedBy?.userName}
+        </p>
       </Link>
     </div>
   );
