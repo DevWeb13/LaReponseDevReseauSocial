@@ -66,7 +66,7 @@ const PinDetail = ({ user: { _id } }) => {
 
   useEffect(() => {
     fetchPinDetails();
-  }, [fetchPinDetails, pinId]);
+  }, [pinId]);
 
   if (!pinDetail) return <Spinner message='Chargement' />;
 
