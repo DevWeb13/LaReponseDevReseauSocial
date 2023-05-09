@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +23,7 @@ const PinDetail = ({ user: { _id } }) => {
 
   const { pinId } = useParams();
 
-  const fetchPinDetails = () => {
+  const fetchPinDetails = useCallback(() => {
     const query = pinDetailQuery(pinId);
 
     if (query) {
@@ -37,7 +37,7 @@ const PinDetail = ({ user: { _id } }) => {
         }
       });
     }
-  };
+  }, [pinId]);
 
   const addComment = () => {
     if (comment && pinId) {
@@ -66,7 +66,7 @@ const PinDetail = ({ user: { _id } }) => {
 
   useEffect(() => {
     fetchPinDetails();
-  }, [pinId]);
+  }, [fetchPinDetails]);
 
   if (!pinDetail) return <Spinner message='Chargement' />;
 
