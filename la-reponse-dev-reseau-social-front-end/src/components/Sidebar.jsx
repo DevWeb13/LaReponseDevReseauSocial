@@ -13,6 +13,18 @@ const isNotActiveStyle =
 const isActiveStyle =
   'flex px-5 gap-3 items-center font-extrabold border-r-2 border-[#145DA0]  transition-all duration-200 ease-in-out capitalize text-[#145DA0]';
 
+/**
+ *
+ * @param {object} props
+ * @param {object} props.user
+ * @param {string} props.user._id
+ * @param {string} props.user.userName
+ * @param {string} props.user.image
+ * @param {string} props.user.email
+ * @param {boolean} props.user.verifiedEmail
+ * @param {function | null} props.closeToggle
+ * @returns
+ */
 const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
@@ -61,7 +73,7 @@ const Sidebar = ({ user, closeToggle }) => {
           ))}
         </div>
       </div>
-      {user && (
+      {user._id !== '' && (
         <Link
           to={`user-profile/${user._id}`}
           className=' flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3 hover:text-[#145DA0] font-semibold'

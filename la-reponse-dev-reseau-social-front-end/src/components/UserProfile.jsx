@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
-import { useParams, useNavigate } from 'react-router-dom';
-import { googleLogout } from '@react-oauth/google';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useAuth0 } from '@auth0/auth0-react';
 
 import {
   userCreatedPinsQuery,
-  userQuery,
   userSavedPinsQuery,
+  userQuery,
 } from '../utils/data';
 import { client } from '../client';
 import MasonryLayout from './MasonryLayout';
@@ -20,11 +21,24 @@ const activeBtnStyles =
 const notActiveBtnStyles =
   'bg-primary  text-black font-bold p-2  rounded-full w-30 outline-none';
 
-const UserProfile = () => {
-  const [user, setUser] = useState(null);
+/**
+ *
+ * @param {object} props
+ * @param {object} props.currentUser
+ * @param {string} props.currentUser._id
+ * @param {string} props.currentUser.userName
+ * @param {string} props.currentUser.image
+ * @param {string} props.currentUser.email
+ * @param {boolean} props.currentUser.verifiedEmail
+ * @returns {JSX.Element}
+ */
+const UserProfile = ({ currentUser }) => {
   const [pins, setPins] = useState(null);
   const [text, setText] = useState('Créée');
   const [activeBtn, setActiveBtn] = useState('créée');
+  const [user, setUser] = useState(null);
+
+  const { logout } = useAuth0();
 
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -38,17 +52,17 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (text === 'Créée') {
-      const createdPinsQuery = userCreatedPinsQuery(userId);
+      const createdPinsQuery = userCreatedPinsQuery(user?._id);
       client.fetch(createdPinsQuery).then((data) => {
         setPins(data);
       });
     } else {
-      const savedPinsQuery = userSavedPinsQuery(userId);
+      const savedPinsQuery = userSavedPinsQuery(user?._id);
       client.fetch(savedPinsQuery).then((data) => {
         setPins(data);
       });
     }
-  }, [text, userId]);
+  }, [text, user?._id]);
 
   if (!user) {
     return <Spinner message='Chargement du profil' />;
@@ -73,21 +87,18 @@ const UserProfile = () => {
               {user?.userName}
             </h1>
             <div className='absolute top-0 z-1 right-0 p-2'>
-              {userId === user?._id && (
-                <AiOutlineLogout
-                  color='red'
-                  fontSize={30}
-                  className='cursor-pointer bg-white rounded-full p-1 opacity-70 hover:opacity-100 transition-all duration-200 ease-in-out'
-                  onClick={() => {
-                    // delete the token from the local storage
-                    localStorage.removeItem('user');
-                    googleLogout();
-                    navigate('/login');
-                  }}
-                />
-              )}
+              <AiOutlineLogout
+                onClick={() =>
+                  logout({
+                    logoutParams: { returnTo: 'http://localhost:3000' },
+                  })
+                }
+                fontSize={30}
+                className='cursor-pointer text-alert/50 hover:text-alert transition-all duration-300 ease-in-out'
+              />
             </div>
           </div>
+
           <div className='text-center mb-7'>
             <button
               type='button'
@@ -117,7 +128,10 @@ const UserProfile = () => {
 
           {pins?.length ? (
             <div className='px-2'>
-              <MasonryLayout pins={pins} />
+              <MasonryLayout
+                pins={pins}
+                user={currentUser}
+              />
             </div>
           ) : (
             <div className='flex justify-center font-bold items-center w-full text-xl mt-2'>

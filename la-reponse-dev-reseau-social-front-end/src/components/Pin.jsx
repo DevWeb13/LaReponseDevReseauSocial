@@ -4,20 +4,37 @@ import { v4 as uuidv4 } from 'uuid';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
-
+import { cleanerSub } from '../utils/stringManager';
 import { client, urlFor } from '../client';
-import { fetchUser } from '../utils/fetchUser';
+import { useAuth0 } from '@auth0/auth0-react';
 
-const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
+/**
+ *
+ * @param {object} props
+ * @param {object} props.pin
+ * @param {object} props.pin.postedBy
+ * @param {string} props.pin.image
+ * @param {string} props.pin._id
+ * @param {string} props.pin.destination
+ * @param {string} props.pin.save
+ * @param {object} props.user
+ * @param {string} props.user._id
+ * @param {string} props.user.userName
+ * @param {string} props.user.image
+ * @param {string} props.user.email
+ * @param {boolean} props.user.verifiedEmail
+ * @returns  {JSX.Element}
+ */
+const Pin = ({ pin: { postedBy, image, _id, destination, save }, user }) => {
   const [postHovered, setPostHovered] = useState(false);
 
   const navigate = useNavigate();
 
-  const user = fetchUser();
+  const { isAuthenticated } = useAuth0();
 
   // L'opérateur !! (double négation) est un raccourci syntaxique utilisé pour convertir une valeur en un booléen.
   const alreadySaved = !!save?.filter(
-    (item) => item?.postedBy?._id === user?.sub
+    (item) => item?.postedBy?._id === user?._id
   )?.length;
 
   const savePin = (id) => {
@@ -28,10 +45,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         .insert('after', 'save[-1]', [
           {
             _key: uuidv4(),
-            userId: user?.sub,
+            userId: user?._id,
             postedBy: {
               _type: 'postedBy',
-              _ref: user?.sub,
+              _ref: user?._id,
             },
           },
         ])
@@ -47,7 +64,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     if (alreadySaved) {
       client
         .patch(id)
-        .unset([`save[${save?.indexOf(user?.sub)}]`])
+        .unset([`save[${save?.indexOf(user?._id)}]`])
         .commit()
         .then(() => {
           window.location.reload();
@@ -73,7 +90,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
           alt='user-post'
           className=' w-full'
         />
-        {postHovered && (
+        {postHovered && isAuthenticated && user?.verifiedEmail && (
           <div
             className='absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50 '
             style={{ height: '100%' }}>
@@ -95,7 +112,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     e.stopPropagation();
                     unSavePin(_id);
                   }}>
-                  {save?.length} Enregistré
+                  {save.length} Enregistré
                 </button>
               ) : (
                 <button
@@ -122,7 +139,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     : destination}
                 </a>
               )}
-              {postedBy?._id === user?.sub && (
+              {postedBy?._id === user?._id && (
                 <button
                   type='button'
                   onClick={(e) => {
@@ -138,7 +155,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         )}
       </div>
       <Link
-        to={`user-profile/${postedBy?._id}`}
+        to={`../../user-profile/${postedBy?._id}`}
         className='flex gap-2 items-center border-2 border-t-0 p-1 rounded-b-md bg-white border-[#145DA0]'>
         <img
           className='w-8 h-8 rounded-full object-cover'

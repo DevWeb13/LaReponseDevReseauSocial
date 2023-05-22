@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
+import Spinner from '../components/Spinner';
 
 import { Navbar, Feed, PinDetail, CreatePin, Search } from '../components';
 
+/**
+ *
+ * @param {object} props
+ * @param {object} props.user
+ * @param {string} props.user._id
+ * @param {string} props.user.userName
+ * @param {string} props.user.image
+ * @param {string} props.user.email
+ * @param {boolean} props.user.verifiedEmail
+ * @returns {JSX.Element}
+ */
 const Pins = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -19,11 +32,11 @@ const Pins = ({ user }) => {
         <Routes>
           <Route
             path='/'
-            element={<Feed />}
+            element={<Feed user={user} />}
           />
           <Route
             path='/category/:categoryId'
-            element={<Feed />}
+            element={<Feed user={user} />}
           />
           <Route
             path='/pin-detail/:pinId'
@@ -49,3 +62,7 @@ const Pins = ({ user }) => {
 };
 
 export default Pins;
+
+// export default withAuthenticationRequired(Pins, {
+//   onRedirecting: () => <Spinner message='Chargement' />,
+// });
