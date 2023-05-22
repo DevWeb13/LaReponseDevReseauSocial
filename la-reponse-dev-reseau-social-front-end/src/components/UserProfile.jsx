@@ -85,11 +85,7 @@ const UserProfile = ({ currentUser }) => {
             </h1>
             <div className='absolute top-0 z-1 right-0 p-2'>
               <AiOutlineLogout
-                onClick={() =>
-                  logout({
-                    logoutParams: { returnTo: 'http://localhost:3000' },
-                  })
-                }
+                onClick={() => logout()}
                 fontSize={30}
                 className='cursor-pointer text-alert/50 hover:text-alert transition-all duration-300 ease-in-out'
               />
