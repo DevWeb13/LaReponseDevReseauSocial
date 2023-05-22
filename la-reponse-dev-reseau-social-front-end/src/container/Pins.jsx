@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
-import Spinner from '../components/Spinner';
-
 import { Navbar, Feed, PinDetail, CreatePin, Search } from '../components';
 
 /**
@@ -62,7 +59,3 @@ const Pins = ({ user }) => {
 };
 
 export default Pins;
-
-// export default withAuthenticationRequired(Pins, {
-//   onRedirecting: () => <Spinner message='Chargement' />,
-// });

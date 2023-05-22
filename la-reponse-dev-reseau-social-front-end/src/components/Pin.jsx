@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
-import { cleanerSub } from '../utils/stringManager';
 import { client, urlFor } from '../client';
 import { useAuth0 } from '@auth0/auth0-react';
 

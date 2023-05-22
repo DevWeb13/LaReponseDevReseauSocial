@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-
 import {
   userCreatedPinsQuery,
   userSavedPinsQuery,
@@ -40,7 +38,6 @@ const UserProfile = ({ currentUser }) => {
 
   const { logout } = useAuth0();
 
-  const navigate = useNavigate();
   const { userId } = useParams();
 
   useEffect(() => {

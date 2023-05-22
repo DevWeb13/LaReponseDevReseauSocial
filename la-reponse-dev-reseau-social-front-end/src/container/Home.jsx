@@ -58,7 +58,10 @@ const Home = () => {
 
   useEffect(() => {
     if (user) {
-      createOrGetUser(user);
+      createOrGetUser(user).catch((error) => {
+        // Handle the error appropriately
+        console.error('Error creating or getting user:', error);
+      });
     }
   }, [user]);
 
