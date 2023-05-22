@@ -44,10 +44,11 @@ module.exports = {
         primary: '#145da0',
         secColor: '#1e84e3',
         navColor: '#BEBEBE',
+        alert: '#FF0000',
       },
       backgroundColor: {
         mainColor: '#FBF8F9',
-        secondaryColor: '#F0F0F0',
+        secondaryColor: '#145da0',
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
       },
       keyframes: {

@@ -6,7 +6,18 @@ import { feedQuery, searchQuery } from '../utils/data';
 import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
 
-const Feed = () => {
+/**
+ *
+ * @param {object} props
+ * @param {object} props.user
+ * @param {string} props.user._id
+ * @param {string} props.user.userName
+ * @param {string} props.user.image
+ * @param {string} props.user.email
+ * @param {boolean} props.user.verifiedEmail
+ * @returns {JSX.Element}
+ */
+const Feed = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [pins, setPins] = useState([]);
   const { categoryId } = useParams();
@@ -38,7 +49,16 @@ const Feed = () => {
     return <h2>Il n'y a pas d'épingles disponibles</h2>;
   }
 
-  return <div>{pins && <MasonryLayout pins={pins} />}</div>;
+  return (
+    <div>
+      {pins && (
+        <MasonryLayout
+          pins={pins}
+          user={user}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Feed;

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Taviraj', sans-serif;
+  font-family: 'PT Sans', sans-serif;
   font-style: italic;
-  color: #00b0dc;
+  color: #145da0;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

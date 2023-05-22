@@ -1,33 +1,25 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import Login from './components/Login';
+import React from 'react';
 import Home from './container/Home';
-import { fetchUser } from './utils/fetchUser';
+import { useAuth0 } from '@auth0/auth0-react';
+import Spinner from './components/Spinner';
+import LoginButton from './components/LoginButton';
 
 const App = () => {
-  const navigate = useNavigate();
+  const { isLoading, error, isAuthenticated } = useAuth0();
 
-  useEffect(() => {
-    const user = fetchUser();
-    if (!user) {
-      navigate('/login');
-    }
-  }, [navigate]);
+  if (error) {
+    return <div>Oops... {error.message}</div>;
+  }
 
-  return (
-    <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}>
-      <Routes>
-        <Route
-          path='/login'
-          element={<Login />}
-        />
-        <Route
-          path='/*'
-          element={<Home />}
-        />
-      </Routes>
-    </GoogleOAuthProvider>
+  if (isLoading) {
+    return <Spinner message='Chargement' />;
+  }
+  return isAuthenticated ? (
+    <Home />
+  ) : (
+    <LoginButton>
+      <Home />
+    </LoginButton>
   );
 };
 

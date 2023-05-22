@@ -14,6 +14,7 @@ import { categories } from '../utils/data';
  * @param {string} props.user._id
  * @param {string} props.user.userName
  * @param {string} props.user.image
+ * @param {string} props.user.email
  * @returns  {JSX.Element}
  */
 const CreatePin = ({ user }) => {
@@ -139,9 +140,9 @@ const CreatePin = ({ user }) => {
           Veuillez remplir tout les champs.
         </p>
       )}
-      <div className='flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full'>
-        <div className='bg-secondaryColor p-3 flex flex-0.7 w-full'>
-          <div className='flex flex-col justify-center items-center border-2 border-dotted border-gray-300 p-3 w-full h-420'>
+      <div className='flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full '>
+        <div className=' p-3 flex flex-0.7 w-full  '>
+          <div className='flex flex-col justify-center items-center border-2 border-dotted border-gray-300  w-full h-420 hover:cursor-pointer'>
             {loading && <Spinner message={null} />}
             {wrongImageType && <p>Mauvais type d'image</p>}
             {!imageAsset ? (
@@ -149,12 +150,12 @@ const CreatePin = ({ user }) => {
                 className='h-full   '
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}>
-                <div className='flex flex-col items-center justify-center h-full'>
+                <div className='flex flex-col items-center justify-center h-full hover:cursor-pointer'>
                   <div className='flex flex-col justify-center items-center'>
                     <p className='font-bold text-2xl'>
                       <AiOutlineCloudUpload />
                     </p>
-                    <p className='text-lg'>
+                    <p className='text-lg text-center'>
                       Cliquez ou glissez-déposez votre image ici
                     </p>
                   </div>

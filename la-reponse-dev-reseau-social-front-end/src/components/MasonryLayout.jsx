@@ -12,7 +12,19 @@ const breakpointObj = {
   500: 1,
 };
 
-const MasonryLayout = ({ pins }) => {
+/**
+ *
+ * @param {object} props
+ * @param {object[]} props.pins
+ * @param {object} props.user
+ * @param {string} props.user._id
+ * @param {string} props.user.userName
+ * @param {string} props.user.image
+ * @param {string} props.user.email
+ * @param {boolean} props.user.verifiedEmail
+ * @returns {JSX.Element}
+ */
+const MasonryLayout = ({ pins, user }) => {
   return (
     <Masonry
       className='flex animate-slide-fwd'
@@ -21,6 +33,7 @@ const MasonryLayout = ({ pins }) => {
         <Pin
           key={pin._id}
           pin={pin}
+          user={user}
           className='w-max'
         />
       ))}
