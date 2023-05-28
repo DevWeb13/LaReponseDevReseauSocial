@@ -2,10 +2,9 @@ import React from 'react';
 import Home from './container/Home';
 import { useAuth0 } from '@auth0/auth0-react';
 import Spinner from './components/Spinner';
-import LoginButton from './components/LoginButton';
 
 const App = () => {
-  const { isLoading, error, isAuthenticated } = useAuth0();
+  const { isLoading, error } = useAuth0();
 
   if (error) {
     return <div>Oops... {error.message}</div>;
@@ -14,13 +13,7 @@ const App = () => {
   if (isLoading) {
     return <Spinner message='Chargement' />;
   }
-  return isAuthenticated ? (
-    <Home />
-  ) : (
-    <LoginButton>
-      <Home />
-    </LoginButton>
-  );
+  return <Home />;
 };
 
 export default App;

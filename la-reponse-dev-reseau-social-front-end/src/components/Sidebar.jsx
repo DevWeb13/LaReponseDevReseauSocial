@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { RiHomeFill } from 'react-icons/ri';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
 
 import logo from '../assets/logo.png';
 
@@ -26,15 +28,16 @@ const isActiveStyle =
  * @returns
  */
 const Sidebar = ({ user, closeToggle }) => {
+  const { isAuthenticated } = useAuth0();
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
   };
   return (
-    <div className='flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar'>
-      <div className='flex flex-col'>
+    <div className='flex flex-col justify-between bg-white h-screen overflow-y-scroll min-w-210 hide-scrollbar'>
+      <div className='flex flex-col h-screen justify-around p-4'>
         <Link
           to='/'
-          className='flex px-5 gap-2 my-6 pt-1 w-190 items-center'
+          className='flex px-5 gap-2  pt-1 w-190 items-center'
           onClick={handleCloseSidebar}>
           <img
             src={logo}
@@ -42,7 +45,7 @@ const Sidebar = ({ user, closeToggle }) => {
             className='w-full'
           />
         </Link>
-        <div className='flex flex-col gap-5'>
+        <div className='flex flex-col gap-5 mb-10'>
           <NavLink
             to='/'
             className={({ isActive }) =>
@@ -72,21 +75,29 @@ const Sidebar = ({ user, closeToggle }) => {
             </NavLink>
           ))}
         </div>
+
+        {isAuthenticated ? (
+          <NavLink
+            to={`user-profile/${user._id}`}
+            className='bg-[#145da0] text-white rounded-lg  p-3 h-12 flex justify-center items-center text-center gap-1.5 shadow-md shadow-[#00b0dc]  hover:shadow-none'
+            onClick={handleCloseSidebar}>
+            <img
+              src={user.image}
+              alt='user-profile'
+              className='w-8 h-8 rounded-full'
+            />
+            {user.userName}
+            <IoIosArrowForward />
+          </NavLink>
+        ) : (
+          <LoginButton>
+            <div className='bg-[#145da0] text-white rounded-lg  p-3 h-12 flex justify-center items-center text-center gap-1.5 shadow-md shadow-[#00b0dc]  hover:shadow-none'>
+              Se connecter
+              <IoIosArrowForward />
+            </div>
+          </LoginButton>
+        )}
       </div>
-      {user._id !== '' && (
-        <Link
-          to={`user-profile/${user._id}`}
-          className=' flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3 hover:text-[#145DA0] font-semibold'
-          onClick={handleCloseSidebar}>
-          <img
-            src={user.image}
-            alt='user-profile'
-            className='w-10 h-10 rounded-full'
-          />
-          <p>{user.userName}</p>
-          <IoIosArrowForward />
-        </Link>
-      )}
     </div>
   );
 };

@@ -7,7 +7,8 @@ import { client, urlFor } from '../client';
 import MasonryLayout from './MasonryLayout';
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
 import Spinner from './Spinner';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
 
 /**
  *
@@ -42,6 +43,8 @@ const PinDetail = ({ user }) => {
   });
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
+
+  const { isAuthenticated } = useAuth0();
 
   const { pinId } = useParams();
 
@@ -100,28 +103,46 @@ const PinDetail = ({ user }) => {
         <div className='flex justify-center items-center md:items-start flex-initial'>
           <img
             src={pinDetail?.image && urlFor(pinDetail.image).url()}
-            className='rounded-t-3xl rounded-b-lg'
+            className='rounded-3xl shadow-2xl border border-black'
             alt='user-post'
           />
         </div>
         <div className='w-full p-5 flex-1 xl:min-w-620'>
-          <div className='flex justify-between items-center'>
-            <div className='flex gap-2 items-center'>
+          {isAuthenticated ? (
+            <div className='flex justify-between items-center'>
+              <div className='flex gap-2 items-center'>
+                <a
+                  href={`${pinDetail.image?.asset?.url}?dl=`}
+                  download
+                  onClick={(e) => e.stopPropagation()}
+                  className='bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100  outline-none shadow-md shadow-[#00b0dc] hover:shadow-none hover:border-2'>
+                  <MdDownloadForOffline className='w-9 h-9 ' />
+                </a>
+              </div>
               <a
-                href={`${pinDetail.image?.asset?.url}?dl=`}
-                download
-                onClick={(e) => e.stopPropagation()}
-                className='bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'>
-                <MdDownloadForOffline />
+                href={pinDetail.destination}
+                target='_blank'
+                rel='noreferrer'>
+                {pinDetail.destination}
               </a>
             </div>
-            <a
-              href={pinDetail.destination}
-              target='_blank'
-              rel='noreferrer'>
-              {pinDetail.destination}
-            </a>
-          </div>
+          ) : (
+            <div className='flex justify-between items-center'>
+              <div className='flex gap-2 items-center'>
+                <LoginButton>
+                  <div className='bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'>
+                    <MdDownloadForOffline />
+                  </div>
+                </LoginButton>
+              </div>
+              <LoginButton>
+                <div className='bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'>
+                  {pinDetail.destination}
+                </div>
+              </LoginButton>
+            </div>
+          )}
+
           <div>
             <h1 className='text-4xl font-bold break-words mt-3'>
               {pinDetail.title}
@@ -178,7 +199,7 @@ const PinDetail = ({ user }) => {
                 />
                 <button
                   type='button'
-                  className='bg-red-500 text-white p-2 rounded-full px-6 py-2 font-semibold text-base outline-none'
+                  className='bg-[#145da0] text-white rounded-lg  p-3 h-12 flex justify-center items-center text-center gap-1.5 shadow-md shadow-[#00b0dc]  hover:shadow-none'
                   onClick={addComment}>
                   {addingComment ? 'Ajout...' : 'Ajoutez'}
                 </button>
@@ -204,7 +225,4 @@ const PinDetail = ({ user }) => {
   );
 };
 
-// export default PinDetail;
-export default withAuthenticationRequired(PinDetail, {
-  onRedirecting: () => <Spinner message='Chargement' />,
-});
+export default PinDetail;
