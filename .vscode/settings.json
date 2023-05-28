@@ -1,0 +1,6 @@
+{
+    "editor.fontSize": 14,
+    "editor.mouseWheelZoom": true,
+    "javascript.format.semicolons": "ignore",
+    "prettier.semi": true
+}

@@ -247,7 +247,7 @@ const CreatePin = ({ user }) => {
               <button
                 type='button'
                 onClick={savePin}
-                className='bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none'>
+                className='bg-[#145da0] text-white rounded-lg  p-3 h-12 flex justify-center items-center text-center gap-1.5 shadow-md shadow-[#00b0dc]  hover:shadow-none'>
                 Sauvegarder
               </button>
             </div>

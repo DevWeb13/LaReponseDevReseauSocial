@@ -47,7 +47,7 @@ module.exports = {
         alert: '#FF0000',
       },
       backgroundColor: {
-        mainColor: '#FBF8F9',
+        mainColor: '#00b0dc',
         secondaryColor: '#145da0',
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
       },

@@ -57,12 +57,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      createOrGetUser(user).catch((error) => {
-        // Handle the error appropriately
-        console.error('Error creating or getting user:', error);
-      });
-    }
+    createOrGetUser(user).catch((error) => {
+      // Handle the error appropriately
+      console.error('Error creating or getting user:', error);
+    });
   }, [user]);
 
   return (
@@ -91,7 +89,7 @@ const Home = () => {
             <img
               src={currentUser?.image}
               alt='logo'
-              className='w-28'
+              className='w-12 rounded-full '
             />
           </Link>
         </div>
