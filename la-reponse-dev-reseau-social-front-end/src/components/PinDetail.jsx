@@ -201,7 +201,7 @@ const PinDetail = ({ user }) => {
                   type='button'
                   className='bg-[#145da0] text-white rounded-lg  p-3 h-12 flex justify-center items-center text-center gap-1.5 shadow-md shadow-[#00b0dc]  hover:shadow-none'
                   onClick={addComment}>
-                  {addingComment ? 'Ajout...' : 'Ajoutez'}
+                  {addingComment ? 'Ajout...' : 'Publier'}
                 </button>
               </>
             )}
