@@ -1,0 +1,26 @@
+name: Mon Workflow
+
+on:
+  workflow_dispatch:
+
+env:
+  SENDER_EMAIL: ${{ secrets.SENDER_EMAIl }}
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Exécuter l'envoi d'e-mail
+        run: npm run send-email
