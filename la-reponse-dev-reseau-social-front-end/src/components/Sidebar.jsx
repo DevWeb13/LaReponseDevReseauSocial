@@ -45,7 +45,7 @@ const Sidebar = ({ user, closeToggle }) => {
             className='w-full'
           />
         </Link>
-        <div className='flex flex-col gap-5 mb-10'>
+        <div className='flex flex-col flex-1  mb-10 justify-around'>
           <NavLink
             to='/'
             className={({ isActive }) =>
