@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  SENDER_EMAIL: ${{ secrets.SENDER_EMAIl }}
+  SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
 
 jobs:
   send-email:
